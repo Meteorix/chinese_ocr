@@ -40,12 +40,10 @@ def predict(img):
     
     img = img.resize([width, 32], Image.ANTIALIAS)
    
-    '''
     img_array = np.array(img.convert('1'))
     boundary_array = np.concatenate((img_array[0, :], img_array[:, width - 1], img_array[31, :], img_array[:, 0]), axis=0)
     if np.median(boundary_array) == 0:  # 将黑底白字转换为白底黑字
         img = ImageOps.invert(img)
-    '''
 
     img = np.array(img).astype(np.float32) / 255.0 - 0.5
     

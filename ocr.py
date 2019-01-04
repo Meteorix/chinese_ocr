@@ -6,9 +6,10 @@ from math import *
 import numpy as np
 from PIL import Image
 
-sys.path.append(os.getcwd() + '/ctpn')
-from ctpn.text_detect import text_detect
-from lib.fast_rcnn.config import cfg_from_file
+# add your own ctpn module path
+sys.path.append(r"D:\dev\text-detection-ctpn")
+from ctpn.detect import text_detect
+
 from densenet.model import predict as keras_densenet
 
 
@@ -67,6 +68,9 @@ def charRec(img, text_recs, adjust=False):
 
        image = Image.fromarray(partImg).convert('L')
        text = keras_densenet(image)
+
+       # image.show()
+       # import pdb; pdb.set_trace()
        
        if len(text) > 0:
            results[index] = [rec]
@@ -79,9 +83,7 @@ def model(img, adjust=False):
     @img: 图片
     @adjust: 是否调整文字识别结果
     """
-    cfg_from_file('./ctpn/ctpn/text.yml')
     text_recs, img_framed, img = text_detect(img)
     text_recs = sort_box(text_recs)
     result = charRec(img, text_recs, adjust)
     return result, img_framed
-

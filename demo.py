@@ -1,5 +1,7 @@
 #-*- coding:utf-8 -*-
 import os
+import sys
+import cv2 
 import ocr
 import time
 import shutil
@@ -16,13 +18,12 @@ if __name__ == '__main__':
     os.mkdir(result_dir)
 
     for image_file in sorted(image_files):
-        image = np.array(Image.open(image_file).convert('RGB'))
+        image = cv2.imread(image_file)
         t = time.time()
         result, image_framed = ocr.model(image)
-        output_file = os.path.join(result_dir, image_file.split('/')[-1])
+        output_file = os.path.join(result_dir, os.path.split(image_file)[-1])
         Image.fromarray(image_framed).save(output_file)
         print("Mission complete, it took {:.3f}s".format(time.time() - t))
         print("\nRecognition Result:\n")
         for key in result:
             print(result[key][1])
-
