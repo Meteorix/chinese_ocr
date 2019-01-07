@@ -1,11 +1,13 @@
 #-*- coding:utf-8 -*-
 import os
 import sys
-import cv2 
-import ocr
+import cv2
 import time
+import json
 import shutil
+import ocr
 import numpy as np
+import tensorflow as tf
 from PIL import Image
 from glob import glob
 image_files = glob('./test_images/*.*')
@@ -25,5 +27,8 @@ if __name__ == '__main__':
         Image.fromarray(image_framed).save(output_file)
         print("Mission complete, it took {:.3f}s".format(time.time() - t))
         print("\nRecognition Result:\n")
-        for key in result:
-            print(result[key][1])
+
+        for rect, text in result:
+            print(text)
+
+        print(json.dumps(result))

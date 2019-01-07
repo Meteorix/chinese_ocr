@@ -42,7 +42,7 @@ def charRec(img, text_recs, adjust=False):
    """
    加载OCR模型，进行字符识别
    """
-   results = {}
+   results = []
    xDim, yDim = img.shape[1], img.shape[0]
 
    for index, rec in enumerate(text_recs):
@@ -73,8 +73,7 @@ def charRec(img, text_recs, adjust=False):
        # import pdb; pdb.set_trace()
 
        if len(text) > 0:
-           results[index] = [rec]
-           results[index].append(text)  # 识别文字
+           results.append((rec.tolist(), text))
 
    return results
 

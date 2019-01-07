@@ -16,3 +16,5 @@ test_result/
 
 
 *.un~
+app.log
+nohup.out
