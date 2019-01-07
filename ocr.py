@@ -7,14 +7,14 @@ import numpy as np
 from PIL import Image
 
 # add your own ctpn module path
-sys.path.append(r"D:\dev\text-detection-ctpn")
+sys.path.append(r"../text-detection-ctpn")
 from ctpn.detect import text_detect
 
 from densenet.model import predict as keras_densenet
 
 
 def sort_box(box):
-    """ 
+    """
     对box进行排序
     """
     box = sorted(box, key=lambda x: sum([x[1], x[3], x[5], x[7]]))
@@ -44,7 +44,7 @@ def charRec(img, text_recs, adjust=False):
    """
    results = {}
    xDim, yDim = img.shape[1], img.shape[0]
-    
+
    for index, rec in enumerate(text_recs):
        xlength = int((rec[6] - rec[0]) * 0.1)
        ylength = int((rec[7] - rec[1]) * 0.2)
@@ -58,7 +58,7 @@ def charRec(img, text_recs, adjust=False):
            pt2 = (rec[2], rec[3])
            pt3 = (min(rec[6], xDim - 2), min(yDim - 2, rec[7]))
            pt4 = (rec[4], rec[5])
-        
+
        degree = degrees(atan2(pt2[1] - pt1[1], pt2[0] - pt1[0]))  # 图像倾斜角度
 
        partImg = dumpRotateImage(img, degree, pt1, pt2, pt3, pt4)
@@ -71,11 +71,11 @@ def charRec(img, text_recs, adjust=False):
 
        # image.show()
        # import pdb; pdb.set_trace()
-       
+
        if len(text) > 0:
            results[index] = [rec]
            results[index].append(text)  # 识别文字
- 
+
    return results
 
 def model(img, adjust=False):
